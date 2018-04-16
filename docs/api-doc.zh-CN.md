@@ -77,7 +77,6 @@ export default format(proxy);
 - $body: 数据返回结果，通常就是 mock 的数据
 
 <img width="600" src="https://gw.alipayobjects.com/zos/rmsportal/PVfsHataJahAwAVaKDtp.png" />
-
 ### 本地测试 mock 数据和真实端口
 
 当启动本地的 API Docs 站点以后，可以点击 `send` 按钮发送 `POST` 或者 `GET` 请求，并且返回值会在弹出框中显示：

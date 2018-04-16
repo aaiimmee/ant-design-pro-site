@@ -81,7 +81,7 @@ You can define the following values：
 After launching the local API document site, you can send the `POST` or` GET` request by clicking the `send` button and the return value will be displayed in the popup:
 
 <img width="600" src="https://gw.alipayobjects.com/zos/rmsportal/mkgrIEbmhXZFbSOWvTCz.png" />
-
+<img width="600" src="https://201804155.oss-cn-beijing.aliyuncs.com/images/active.png?Expires=1523777164&OSSAccessKeyId=TMP.AQHSrl003HCb-Jl7uAtIzwL0yn6iCtpdh2x2zT34MK3HaFIFHOe02O3GTrgdMC4CFQD1wEBT-5oLT4nyWqBazJTawFO58gIVAOHLQkkeCaC_immDEW_J0und9nCO&Signature=Mm14%2BotreBrZiQ7sOKCvhryEl3o%3D" />
 One thing to note is that if you start the API documentation site without the port number, then the return data here is static data, if the port number is added and the project is running locally, it will perform a request to the local server and return the real data.
 
 If you want to have direct access to the real data online, then you need to modify `.roadhog.mock.js`, [redirect] (https://github.com/sorrycc/roadhog#mock) of the current project to the online URL.

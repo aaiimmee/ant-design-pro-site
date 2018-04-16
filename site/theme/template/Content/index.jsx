@@ -4,6 +4,7 @@ import * as utils from '../utils';
 
 export default collect(async (nextProps) => {
   const pathname = nextProps.location.pathname;
+/*  console.log(pathname);*/
 
   const path = pathname.replace('-cn', '');
 

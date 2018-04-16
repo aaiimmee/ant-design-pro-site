@@ -7,6 +7,9 @@ type: 入门
   
 授课辅导活动十分好看，欢迎访问[Ant Design Pro](http://www.baidu.com)
 
+<img src="../favicon.png" width="40"  />
+<img width="600" src="https://201804155.oss-cn-beijing.aliyuncs.com/images/active.png?Expires=1523777164&OSSAccessKeyId=TMP.AQHSrl003HCb-Jl7uAtIzwL0yn6iCtpdh2x2zT34MK3HaFIFHOe02O3GTrgdMC4CFQD1wEBT-5oLT4nyWqBazJTawFO58gIVAOHLQkkeCaC_immDEW_J0und9nCO&Signature=Mm14%2BotreBrZiQ7sOKCvhryEl3o%3D" />
+
 ```
 -Dashboard -分析页
  -监控页

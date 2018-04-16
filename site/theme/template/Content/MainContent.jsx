@@ -11,6 +11,7 @@ import * as utils from '../utils';
 const { SubMenu } = Menu;
 
 function getActiveMenuItem(props) {
+  console.log(props);
   const children = props.params.children;
   return (children && children.replace('-cn', '')) ||
     props.location.pathname.replace(/(^\/|-cn$)/g, '');
@@ -53,16 +54,19 @@ export default class MainContent extends React.PureComponent {
     this.componentDidUpdate();
   }
 
-  componentWillReceiveProps(nextProps) {
+/*  componentWillReceiveProps(nextProps) {
     const openKeys = this.getSideBarOpenKeys(nextProps);
+    console.log(openKeys);
+   //openKeys当前展开的 SubMenu 菜单项 key 数组
     if (openKeys) {
       this.setState({
         openKeys,
       });
     }
-  }
+  }*/
 
   componentDidUpdate() {
+    console.log(location.hash);
     if (!location.hash) {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
@@ -81,13 +85,19 @@ export default class MainContent extends React.PureComponent {
   }
 
   handleMenuOpenChange = (openKeys) => {
+/*    const openKeys = this.getSideBarOpenKeys(openKey);*/
+    if(openKeys.length>=2){
+      openKeys.shift();
+    }
+    console.log(openKeys);
     this.setState({
       openKeys,
     });
   }
 
   getSideBarOpenKeys(nextProps) {
-    const pathname = nextProps.location.pathname;
+    /*console.log(nextProps.localizedPageData.meta.type);*/
+    /*const pathname = nextProps.location.pathname;
     const prevModule = this.currentModule;
     this.currentModule = pathname.replace(/^\//).split('/')[1] || 'components';
     if (this.currentModule === 'react') {
@@ -96,20 +106,33 @@ export default class MainContent extends React.PureComponent {
     const locale = utils.isZhCN(pathname) ? 'zh-CN' : 'en-US';
     if (prevModule !== this.currentModule) {
       const moduleData = getModuleData(nextProps);
+
       const shouldOpenKeys = Object.keys(utils.getMenuItems(moduleData, locale));
-      return shouldOpenKeys;
-    }
+
+      return shouldOpenKeys;*/
+      const sum=[];
+      sum.push(nextProps.localizedPageData.meta.type);
+      return sum;
+
+    /*  const subtitleKey = Object.keys(Object.values(utils.getMenuItems(moduleData, locale))[0]);
+      return subtitleKey;*/
+    // }
   }
 
   generateMenuItem(isTop, item) {
     const locale = this.context.intl.locale;
+   /* console.log(isTop);//false
+    console.log(item);//{order: ,type: ,title: ,filename: }
+    console.log(locale);//Zh-CN*/
     const key = fileNameToPath(item.filename);
+   /* console.log(key);*/
     const text = [
       <span key="english">{item.title[locale] || item.title}</span>,
       <span className="chinese" key="chinese">{item.subtitle}</span>,
     ];
     const disabled = item.disabled;
     const url = item.filename.replace(/(\/index)?((\.zh-CN)|(\.en-US))?\.md$/i, '').replace('scaffold/src/', '');
+  /*  console.log(item.link);*/
     const child = !item.link ? (
       <Link
         to={utils.getLocalizedPathname(/^components/.test(url) ? `${url}/` : url, locale === 'zh-CN')}
@@ -137,9 +160,12 @@ export default class MainContent extends React.PureComponent {
   }
 
   generateSubMenuItems(obj) {
+   /* console.log(obj);
+    console.log(obj.topLevel);*/
     const { themeConfig } = this.props;
     if (!obj) return [];
     const topLevel = (obj.topLevel || []).map(this.generateMenuItem.bind(this, true));
+   /*  console.log(topLevel);*/
     const itemGroups = Object.keys(obj).filter(isNotTopLevel)
       .sort((a, b) => themeConfig.typeOrder[a] - themeConfig.typeOrder[b])
       .map((type) => {
@@ -149,10 +175,11 @@ export default class MainContent extends React.PureComponent {
           }
           return a.title.charCodeAt(0) - b.title.charCodeAt(0);
         }).map(this.generateMenuItem.bind(this, false));
+        /*console.log(itemGroups);*/
         return (
-          <Menu.ItemGroup title={type} key={type}>
+          <SubMenu title={type} key={type}>
             {groupItems}
-          </Menu.ItemGroup>
+          </SubMenu>
         );
       });
     return [...topLevel, ...itemGroups];
@@ -215,6 +242,7 @@ export default class MainContent extends React.PureComponent {
   render() {
     const props = this.props;
     const activeMenuItem = getActiveMenuItem(props);
+    console.log(activeMenuItem);
     const menuItems = this.getMenuItems();
     const { prev, next } = this.getFooterNav(menuItems, activeMenuItem);
     const localizedPageData = props.localizedPageData;

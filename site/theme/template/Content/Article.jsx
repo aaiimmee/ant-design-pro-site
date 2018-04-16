@@ -1,4 +1,5 @@
 import React, { Children, cloneElement } from 'react';
+import { Link,NavLink} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { FormattedMessage } from 'react-intl';
 import DocumentTitle from 'react-document-title';
@@ -43,6 +44,7 @@ export default class Article extends React.PureComponent {
   getArticle(article) {
     const { content } = this.props;
     const { meta } = content;
+
     if (!meta.timeline) {
       return article;
     }
@@ -56,6 +58,7 @@ export default class Article extends React.PureComponent {
         i += 1;
       }
       temp.push(child);
+
     });
     if (temp.length > 0) {
       timelineItems.push(<Timeline.Item key={i}>{temp}</Timeline.Item>);
@@ -64,16 +67,34 @@ export default class Article extends React.PureComponent {
       children: <Timeline>{timelineItems}</Timeline>,
     });
   }
+
+  getToc(){
+    const props = this.props;
+    const content = props.content;
+    const Toc=content.toc;
+    let TocItem=[];
+
+    for(let i=1;i<Toc.length;i++){
+      TocItem.push(<li key={i}>{Toc[i][1][2]}</li>);
+    }
+
+    return TocItem;
+  }
   render() {
     const props = this.props;
     const content = props.content;
-
+    /*console.log(content);*/
     const { meta, description } = content;
     const { title, subtitle, filename } = meta;
     const locale = this.context.intl.locale;
     const isNotTranslated = locale === 'en-US' && typeof title === 'object';
+
     return (
-      <DocumentTitle title={`${title[locale] || title} - Ant Design`}>
+      <DocumentTitle title={props.content.meta.title}>
+        {/*
+      源代码：title={`${title[locale] || title} - Ant Design`}
+                title={props.content.meta.title}  上下一样
+      */}
         <article className="markdown" ref={(node) => { this.node = node; }}>
           {isNotTranslated && (
             <Alert
@@ -116,6 +137,11 @@ export default class Article extends React.PureComponent {
               }
             </Affix>
           }
+          <ul>
+          {
+            this.getToc()
+          }
+          </ul>
           {
             this.getArticle(props.utils.toReactComponent(
               ['section', { className: 'markdown' }].concat(getChildren(content.content))
